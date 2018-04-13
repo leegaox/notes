@@ -485,7 +485,7 @@ new Vehicle('Car', 4)运行良好：由于new关键字存在于构造函数调�
 
 在构造函数中添加一个验证：this instanceof Vehicle，以确保执行上下文是正确的对象类型。如果this不是Vehicle对象，则会产生错误。每当Vehicle('Broken Car',3)执行（没有new）时抛出一个异常：Error: Incorrect invocation.（不正确的调用）。
 
-### 间接调用
+### 5. 间接调用
 使用myFun.call()或myFun.apply()方法调用函数时将执行间接调用。
 
 JavaScript中的函数是第一类对象，这意味着函数是一个对象。该对象的类型是[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)。
@@ -544,7 +544,7 @@ console.log('name: '+myRabbit.name +' countLegs: '+myRabbit.countLegs);// myRabb
 ```
 在Rabbit内部的Runner.call(this，name)会间接调用父函数来初始化对象。
 
-### 绑定函数
+### 6. 绑定函数
 绑定函数是一个与对象连接的函数。通常它是使用.bind()方法从原始函数创建的。原始和绑定函数共享相同的代码和范围，但执行时会有不同的上下文。
 
 方法.bind(thisArg [，arg1 [，arg2 [，...]]])接受第一个参数thisArg作为调用时绑定函数的上下文和一个可选的参数列表arg1，arg2，...作为参数传递给被调用的函数。它返回一个与thisArg绑定的新函数。
@@ -620,7 +620,7 @@ new one(); // => Object
 ```
 只有new one()改变了绑定函数的上下文，其他类型的调用总是等于1。
 
-### 箭头函数
+### 7. 箭头函数
 Arrow函数旨在以较短的形式声明函数，并在词汇上（[lexically](https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scoping)）绑定上下文。
 
 它可以使用以下方式：

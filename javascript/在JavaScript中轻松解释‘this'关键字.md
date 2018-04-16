@@ -1,7 +1,8 @@
 ## 在JavaScript中轻松解释'this'关键字
 
-[本文翻译自](https://dmitripavlutin.com/gentle-explanation-of-this-in-javascript/)
+本文翻译自[gentle-explanation-of-this-in-javascript](https://dmitripavlutin.com/gentle-explanation-of-this-in-javascript/)
 
+[TOC]
 
 ### 1. 神秘的‘this’
 
@@ -155,7 +156,7 @@ strictSum(8, 12); // => 20
 
 **正确地说，内部函数的上下文仅依赖于调用，而不依赖于外部函数的上下文。**
 
-为了获得预期的this，请使用[.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)或[.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)来修改内部函数的上下文（[见5.](#5.)）或创建一个绑定函数（使用.bind（），[见6.](#6.)）。
+为了获得预期的this，请使用[.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)或[.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)来修改内部函数的上下文（[见5.](#5)）或创建一个绑定函数（使用.bind（），[见6.](#6.)）。
 
 以下示例计算两个数字的总和：
 
@@ -591,7 +592,7 @@ console.log(simpleGetNumbers()); // => undefined or throws an error in strict mo
 ```
 numbers.getNumbers.bind(numbers)返返回一个绑定numbers对象的函数boundGetNumbers。然后用this作为numbers对象调用boundGetNumbers（）并返回正确的数组对象。
 
-函数numbers.getNumbers可以被提取到一个变量simpleGetNumbers中而无需绑定。在稍后的函数调用simpleGetNumbers()将this作为window或在严格模式下的undefined,但不是numbers对象 (see 3.2. Pitfall)。
+函数numbers.getNumbers可以被提取到一个变量simpleGetNumbers中而无需绑定。在稍后的函数调用simpleGetNumbers()将this作为window或在严格模式下的undefined,但不是numbers对象 (见[3.2. Pitfall](#3.2))。
 在这种情况下，simpleGetNumbers（）将不会正确返回数组。
 
 #### 6.2 紧密的上下文绑定

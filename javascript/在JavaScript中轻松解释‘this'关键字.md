@@ -3,7 +3,7 @@
 [本文翻译自](https://dmitripavlutin.com/gentle-explanation-of-this-in-javascript/)
 
 
-### 1.神秘的‘this’
+### 1. 神秘的‘this’
 
 很多时候，这个关键词对我和许多开始JavaScript开发者来说都是一个谜。这是一个强大的功能，但需要努力去理解。
 
@@ -27,7 +27,7 @@
  - 调用的上下文是函数体内的值。例如，调用map.set（'key'，'value'）具有上下文映射。
  - 函数的范围是一组函数体内可访问的变量，对象和函数。
 
-### 2.函数调用
+### 2. 函数调用
 
 **当函数对象的求值表达式后面跟着一个开括号（逗号分隔的参数表达式和一个右括号）时，函数调用被执行。** 例如parseInt（'18'）。
 
@@ -53,7 +53,7 @@ console.log(message) // => 'Hello World!'
 ```
 IIFE也是一个函数调用：第一对括号（函数（名称）{...}）是一个表达式，其值为一个函数对象，然后是一对带有'World'参数（'World'）的括号。
 
- #### 2.1  函数调用中的‘this’
+ #### 2.1 函数调用中的‘this’
  > this是函数调用中的全局对象。
 
  全局对象由执行环境决定。在浏览器中，它是[window](https://developer.mozilla.org/en-US/docs/Web/API/Window)对象。
@@ -155,7 +155,7 @@ strictSum(8, 12); // => 20
 
 **正确地说，内部函数的上下文仅依赖于调用，而不依赖于外部函数的上下文。**
 
-为了获得预期的this，请使用[.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)或[.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)来修改内部函数的上下文（见5.）或创建一个绑定函数（使用.bind（），见6.）。
+为了获得预期的this，请使用[.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)或[.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)来修改内部函数的上下文（[见5.](#5.)）或创建一个绑定函数（使用.bind（），[见6.](#6.)）。
 
 以下示例计算两个数字的总和：
 
@@ -176,16 +176,16 @@ var numbers = {
 numbers.sum(); // => NaN or throws TypeError in strict mode
 ```
 
-**注意：** numbers.sum（）是一个对象的方法调用（参见3.）,所以sum的context是numbers对象。
+**注意：** numbers.sum（）是一个对象的方法调用（[参见3.](#3.)）,所以sum的context是numbers对象。
 calculate 函数是在sum内定义的，所以你可能期望在calculate（）中也有这个numbers 对象。
 
-尽管如此，calculate（）是一个函数调用（但不是方法调用），它将this作为全局对象**window**（情况2.1）或者在 strict mode（案例2.2）中的 **undefined**。即使外部函数sum具有作为number对象的上下文context ，它在这里也没有影响。
+尽管如此，calculate（）是一个函数调用（但不是方法调用），它将this作为全局对象**window**（[案例2.1](#2.1)）或者在 strict mode（[案例2.2](#2.2)）中的 **undefined**。即使外部函数sum具有作为number对象的上下文context ，它在这里也没有影响。
 
 numbers.sum（）的调用结果是NaN或在strict mode下引发错误TypeError: Cannot read property 'numberA' of undefined。绝对不是预期的结果5 + 10 = 15，都是因为caculate没有被正确调用。
 
 **为了解决这个问题，calculate 函数应该使用与sum方法相同的上下文来执行，以便访问numberA和numberB属性。**
 
-一种解决方案是通过调用calculate.call（this）（函数的间接调用，请参见第5节）手动更改calculate 的上下文到期望的上下文。:
+一种解决方案是通过调用calculate.call（this）（函数的间接调用，请参见[第5节](#5.)）手动更改calculate 的上下文到期望的上下文。:
 
 ```javascript
 var numbers = {
@@ -206,7 +206,7 @@ numbers.sum(); // => 15
 calculate.call(this)像往常一样执行calculate 函数，但还会将上下文修改为指定为第一个参数的值。
 现在this.numberA + this.numberB相当于numbers.numberA + numbers.numberB。该函数返回预期结果5 + 10 = 15。
 
-### 3.方法调用
+### 3. 方法调用
 **方法是存储在对象属性中的函数。** 例如：
 ```javascript
 var myObject = {
@@ -301,9 +301,9 @@ earth.getName(); // => 'Earth'
 
 **注意：**来自对象的方法可以被提取到独立变量var alone = myObj.myMethod中。当单独调用该方法时，从原始对象分离alone()，您可能会认为‘this’是定义该方法的对象。
 
-正确地说，如果在没有对象的情况下调用该方法，则会发生函数调用：其中，this是全局对象window或者在严格模式下的undefined（参见2.1和2.2）。
+正确地说，如果在没有对象的情况下调用该方法，则会发生函数调用：其中，this是全局对象window或者在严格模式下的undefined（参见[2.1](#2.1)和[2.2](#2.2)）。
 
-创建一个绑定函数 var alone = myObj.myMethod.bind(myObj)（using [.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)  , see 6.）修复上下文，使其成为拥有该方法的对象。
+创建一个绑定函数 var alone = myObj.myMethod.bind(myObj)（using [.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)  , 见 [6.](#6.)）修复上下文，使其成为拥有该方法的对象。
 
 以下示例创建Animal构造函数并创建它的一个实例 - myCat。然后在1秒钟后setTimout（）记录myCat对象信息：
 ```javascript
@@ -333,7 +333,7 @@ setTimout(extractedLogInfo);
 
 当分离的logInfo作为函数调用时，这是全局对象，或者在严格模式下（但不是myCat对象）的undefined。所以对象信息不能正确记录。
 
-一个函数可以使用[.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)方法绑定一个对象（见6.）。如果分离的方法与myCat对象绑定，则解决上下文问题：
+一个函数可以使用[.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)方法绑定一个对象（见[6.](#6.)）。如果分离的方法与myCat对象绑定，则解决上下文问题：
 
 ```javascript
 function Animal(type, legs) {
@@ -351,7 +351,7 @@ setTimeout(myCat.logInfo.bind(myCat), 1000);
 
 myCat.logInfo.bind(myCat)返回一个完全像logInfo一样执行的新函数，但是将其作为myCat使用，即使在函数调用中也是如此。
 
-### 4.构造函数调用
+### 4. 构造函数调用
 当[new](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new)的关键字后跟一个表达式时，将执行构造函数调用即一个函数对象，一个左括号（逗号分隔的参数表达式列表和一个右括号）。例如：new RegExp（'\\ d'）。
 
 本示例声明一个函数Country，然后将其作为构造函数调用它：
@@ -459,7 +459,7 @@ car === window  // => true
 ```
 Vehicle是一个在上下文对象上设置type和wheelsCount属性的函数。当执行Vehicle('Car', 4)一个car对象被返回，它具有正确的属性：car.type是'Car'，car.wheelsCount是4。您可能认为它适用于创建和初始化新对象。
 
-但是，this是函数调用中的window对象 (见 2.1.)，结果Vehicle('Car', 4)在window对象上设置熟悉-错误的情况。一个新的对象不会被创建。
+但是，this是函数调用中的window对象 (见[2.1](#2.1))，结果Vehicle('Car', 4)在window对象上设置熟悉-错误的情况。一个新的对象不会被创建。
 
 **确保在需要构造函数调用时使用new运算符**：
 
@@ -525,7 +525,7 @@ function concatName(string) {
 concatName.call(rabbit, 'Hello ');  // => 'Hello White Rabbit'
 concatName.apply(rabbit, ['Bye ']); // => 'Bye White Rabbit'
 ```
-当使用特定上下文执行函数时，间接调用很有用。例如，为了解决函数调用的上下文问题，它总是window，或者在严格模式下的undefined（见2.3）。它可以用来模拟对象上的方法调用（请参阅前面的代码示例）。
+当使用特定上下文执行函数时，间接调用很有用。例如，为了解决函数调用的上下文问题，它总是window，或者在严格模式下的undefined（见[2.3](#2.3)）。它可以用来模拟对象上的方法调用（请参阅前面的代码示例）。
 
 **另一个实际的例子是在ES5中创建类的层次结构来调用父构造函数：**
 ```javascript
@@ -564,10 +564,10 @@ console.log(double(10)); // => 20
 
 multiply.bind(2)返回一个新的函数对象double，它与数字2绑定。multiply和double具有相同的代码和范围。
 
-与.apply()和.call()方法（见5.）相反，它立即调用该函数,
+与.apply()和.call()方法（见[5.](#5.)）相反，它立即调用该函数,
 .bind()方法只会返回一个新的函数，它应该在稍后使用预先配置的函数调用。
 
-#### 6.1绑定函数中的this
+#### 6.1 绑定函数中的this
 > this 是调用绑定函数.bind()时的第一个参数
 
 bind()的作用是创建一个新的函数，该函数将把上下文作为第一个参数传递给.bind()。这是一种功能强大的技术，可以使用预定义的值创建函数。
@@ -743,7 +743,7 @@ Period.prototype.format = function() {
 var walkPeriod = new Period(2, 30);
 walkPeriod.format(); // => '2 hours and 30 minutes'
 ```
-walkPeriod.format() 是一个对象上的方法调用（见3.1.），，其上下文walkPeriod对象。this.hours为2，this.minutes为30，所以该方法返回正确的结果：“2小时30分钟”。
+walkPeriod.format() 是一个对象上的方法调用（见[3.1](#3.1)），，其上下文walkPeriod对象。this.hours为2，this.minutes为30，所以该方法返回正确的结果：“2小时30分钟”。
 
 ### 8. 结论
 因为函数调用对this有最大的影响，所以从现在开始不要问自己：

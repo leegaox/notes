@@ -674,7 +674,7 @@ myPoint.log();
 ```
 setTimeout使用与log()方法相同的上下文（myPoint对象）调用箭头函数。如所看到的，箭头函数“从”定义它的函数“继承”上下文。
 
-如果在本例中尝试使用常规函数，它会创建自己的上下文（window或在严格模式下的undefined）。因此，为了使相同的代码正确地使用函数表达式，需要手动绑定上下文：setTimeout(function() {...}.bind(this)).这是冗长的，使用箭头功能是一个更清洁和更短的解决方案。
+如果在本例中尝试使用常规函数，它会创建自己的上下文（window或在严格模式下的undefined）。因此，为了使用函数表达式使相同的代码正确工作，需要手动绑定上下文：setTimeout(function() {...}.bind(this)).这是冗长的，使用箭头功能是一个更清洁和更短的解决方案。
 如果箭头函数被定义在最上面的范围（在任何函数之外），上下文始终是全局对象（浏览器中的窗口window）：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
 var getContext = () => {
@@ -731,7 +731,7 @@ walkPeriod.format(); // => 'undefined hours and undefined minutes'
 即使format作为对象walkPeriod.format()的方法执行，window仍保留为调用的上下文。发生这种情况是因为箭头函数的静态上下文在不同的调用类型中不会改变。
 this 是 window，因此this.hours 和 this.minutes 是undefined。该方法返回字符串：'undefined hours and undefined minutes'，这不是预期的结果。
 
-函数表达式解决了这个问题，因为常规函数会根据调用改变其上下文：[Try in JS Bin](http://jsbin.com/?js,console)      
+函数表达式解决了这个问题，因为常规函数会根据调用改变其上下文：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
 function Period (hours, minutes) {
   this.hours = hours;

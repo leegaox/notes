@@ -52,14 +52,14 @@ var message = (function(name) {
 })('World');
 console.log(message) // => 'Hello World!'
 ```
-IIFE也是一个函数调用：第一对括号（函数（名称）{...}）是一个表达式，其值为一个函数对象，然后是一对带有'World'参数（'World'）的括号。
+**IIFE也是一个函数调用：第一对括号（函数（名称）{...}）是一个表达式，其值为一个函数对象，然后是一对带有'World'参数（'World'）的括号**。
 
  #### 2.1 函数调用中的‘this’
  > this是函数调用中的全局对象。
 
  全局对象由执行环境决定。在浏览器中，它是[window](https://developer.mozilla.org/en-US/docs/Web/API/Window)对象。
 ![](https://raw.githubusercontent.com/leegaox/notes/master/javascript/pics/2_1.png)
-在函数调用中，执行上下文是全局对象。
+**在函数调用中，执行上下文是全局对象**。
 
 让我们来检查下面的函数中的上下文：[Try in JS Bin](http://jsbin.com/?js,console)
 
@@ -97,7 +97,7 @@ strict mode 是在[ECMAScript 5.1](http://www.ecma-international.org/ecma-262/5.
 
 要启用严格模式，请将指令'use strict'放在函数体的顶部。
 
-一旦启用，strict mode将影响执行上下文，从而使其在常规函数调用中未定义。执行上下文不再是全局对象，与上面的情况2.1相反。
+一旦启用，strict mode将影响执行上下文，从而使其在常规函数调用中为undefined。执行上下文不再是全局对象，与上面的情况2.1相反。
 ![](https://raw.githubusercontent.com/leegaox/notes/master/javascript/pics/2_2.png)
 
 以strict mode执行的函数示例：[Try in JS Bin](http://jsbin.com/?js,console)
@@ -129,7 +129,7 @@ function execute() {
 execute();
 ```
 
-'use strict'插入到执行主体的顶部，从而在其范围内启用strict mode。因为concat是在执行范围内声明的，所以它继承了strict mode。而调用concat（'Hello'，'World！'）使得this成为undefined。
+**'use strict'插入到执行主体的顶部，从而在其范围内启用strict mode**。因为concat是在执行范围内声明的，所以它继承了strict mode。而调用concat（'Hello'，'World！'）使得this成为undefined。
 
 一个JavaScript文件可能包含严格模式和非严格模式。因此，对于相同的调用类型，可以在单个脚本中具有不同的上下文行为：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
@@ -247,7 +247,7 @@ isNaN(0);            // function invocation
 #### 3.1 方法调用中的this
 >在方法调用中'this'是拥有该方法的对象。
 
-当在一个对象上调用一个方法时，'this'成为对象本身。
+**当在一个对象上调用一个方法时，'this'成为对象本身。**
 ![](https://raw.githubusercontent.com/leegaox/notes/master/javascript/pics/3_1.png)
 让我们用一个增加数字的方法创建一个对象：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
@@ -300,7 +300,7 @@ earth.getName(); // => 'Earth'
 
 #### 3.2 陷阱：从它的对象分离方法
 
-**注意：**来自对象的方法可以被提取到独立变量var alone = myObj.myMethod中。当单独调用该方法时，从原始对象分离alone()，您可能会认为‘this’是定义该方法的对象。
+**注意：** 来自对象的方法可以被提取到独立变量var alone = myObj.myMethod中。当单独调用该方法alone()时，this从原始对象分离，您可能会认为‘this’是定义该方法的对象。
 
 正确地说，如果在没有对象的情况下调用该方法，则会发生函数调用：其中，this是全局对象window或者在严格模式下的undefined（参见[2.1](#2.1)和[2.2](#2.2)）。
 
@@ -322,7 +322,7 @@ var myCat = new Animal('Cat', 4);
 setTimeout(myCat.logInfo, 1000);
 ```
 
-**注意：**你可能会认为setTimout会调用myCat.logInfo（），它应该记录有关myCat对象的信息。
+**注意：** 你可能会认为setTimout会调用myCat.logInfo（），它应该记录有关myCat对象的信息。
 
 **不幸的是，当作为参数传递时，该方法与其对象分离**：setTimout（myCat.logInfo）。以下情况等同：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
@@ -353,7 +353,7 @@ setTimeout(myCat.logInfo.bind(myCat), 1000);
 myCat.logInfo.bind(myCat)返回一个完全像logInfo一样执行的新函数，但是将其作为myCat使用，即使在函数调用中也是如此。
 
 ### 4. 构造函数调用
-当[new](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new)的关键字后跟一个表达式时，将执行构造函数调用即一个函数对象，一个左括号（逗号分隔的参数表达式列表和一个右括号）。例如：new RegExp（'\\ d'）。
+当[new](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new)的关键字后跟一个表达式时，将执行构造函数调用即：一个函数对象，一个左括号（逗号分隔的参数表达式列表和一个右括号）。例如：new RegExp（'\\ d'）。
 
 本示例声明一个函数Country，然后将其作为构造函数调用它：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
@@ -391,12 +391,12 @@ var paris = new City('Paris', false);
 paris.travel();
 ```
 new City('Paris') 是一个构造函数调用。对象初始化由class中的特殊方法处理：[constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor)
-，它有'this'作为新创建的对象。
+，它将'this'作为新创建的对象。
 
-构造函数调用将创建一个空的新对象，该对象从构造函数的prototype继承属性。构造函数的作用是初始化对象。
-正如你可能已经知道的那样，这种类型的调用的上下文是创建的实例。这是下一章主题。
+构造函数调用将创建一个空的新对象，该对象从构造函数的**prototype**继承属性。构造函数的作用是初始化对象。
+正如你可能已经知道的那样，这种类型的调用的上下文是创建的实例。
 
-当一个属性访问器myObject.myFunction的前面是new关键字，JavaScript将执行构造函数调用，但不会执行方法调用。例如new myObject.myFunction()：**首先使用属性访问器提取函数**:extractedFunction = myObject.myFunction,**然后作为构造函数被调用来创建一个新的对象**: new extractedFunction().
+**当一个属性访问器myObject.myFunction的前面是new关键字，JavaScript将执行构造函数调用，但不会执行方法调用**。例如new myObject.myFunction()：**首先使用属性访问器提取函数**:extractedFunction = myObject.myFunction,**然后作为构造函数被调用来创建一个新的对象**: new extractedFunction().
 
 #### 4.1 构造函数调用中的this
 > this 是构造函数调用中新创建的对象
@@ -443,7 +443,7 @@ reg1.source === reg2.source; // => true
 
 当执行new RegExp（'\\ w +'）和RegExp（'\\ w +'）时，JavaScript会创建等效的正则表达式对象。
 
-**注意：**使用函数调用来创建对象是一个潜在的问题（不包括工厂模式），因为当new关键字丢失时，一些构造函数可能会忽略初始化对象的逻辑。
+**注意：** 使用函数调用来创建对象是一个潜在的问题（不包括工厂模式），因为当new关键字丢失时，一些构造函数可能会忽略初始化对象的逻辑。
 
 以下示例说明了这个问题：[Try in JS Bin](http://jsbin.com/?js,console)
 ```javascript
@@ -487,12 +487,11 @@ new Vehicle('Car', 4)运行良好：由于new关键字存在于构造函数调�
 在构造函数中添加一个验证：this instanceof Vehicle，以确保执行上下文是正确的对象类型。如果this不是Vehicle对象，则会产生错误。每当Vehicle('Broken Car',3)执行（没有new）时抛出一个异常：Error: Incorrect invocation.（不正确的调用）。
 
 ### 5. 间接调用
-使用myFun.call()或myFun.apply()方法调用函数时将执行间接调用。
+使用 **myFun.call()** 或 **myFun.apply()** 方法调用函数时将执行间接调用。
 
 JavaScript中的函数是第一类对象，这意味着函数是一个对象。该对象的类型是[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)。
 
-从函数对象所具有的 [list of methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#Methods)中,.call() and .apply() are used to invoke the function with a configurable context:
-中文(简体)[.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)和[.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)用于使用可配置的上下文调用该函数：
+从函数对象所具有的 [list of methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#Methods)中,[.call()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)和[.apply()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)用于使用可配置的上下文调用该函数：
 
   - 方法.call(thisArg [，arg1 [，arg2 [，...]]])接受第一个参数thisArg作为调用的上下文和一个参数列表arg1，arg2，...作为参数传递给被调用函数。
   - 方法.apply(thisArg, [arg1, arg2, ...]) 接受第一个参数thisArg作为调用的上下文和类似数组的对象[array-like object](http://2ality.com/2013/05/quirk-array-like-objects.html)[arg1, arg2, ...] 作为参数传递给被调用的函数。
@@ -546,7 +545,7 @@ console.log('name: '+myRabbit.name +' countLegs: '+myRabbit.countLegs);// myRabb
 在Rabbit内部的Runner.call(this，name)会间接调用父函数来初始化对象。
 
 ### 6. 绑定函数
-绑定函数是一个与对象连接的函数。通常它是使用.bind()方法从原始函数创建的。原始和绑定函数共享相同的代码和范围，但执行时会有不同的上下文。
+绑定函数是一个与对象连接的函数。通常它是使用 **.bind()** 方法从原始函数创建的。原始和绑定函数共享相同的代码和范围，但执行时会有不同的上下文。
 
 方法.bind(thisArg [，arg1 [，arg2 [，...]]])接受第一个参数thisArg作为调用时绑定函数的上下文和一个可选的参数列表arg1，arg2，...作为参数传递给被调用的函数。它返回一个与thisArg绑定的新函数。
 
@@ -651,7 +650,7 @@ sumArguments(5, 5, 6); // => 16
 #### 7.1 箭头函数中的this
 > this 是定义箭头函数的封闭上下文
 
-箭头函数不会创建它自己的执行上下文，而是从定义它的外部函数中获取它。
+**箭头函数不会创建它自己的执行上下文，而是从定义它的外部函数中获取它**。
 ![](https://raw.githubusercontent.com/leegaox/notes/master/javascript/pics/7_1.png)
 
 以下示例显示了上下文透明度属性：[Try in JS Bin](http://jsbin.com/?js,console)
@@ -711,7 +710,7 @@ var numbers = [1, 2];
 
 ### 7.2 陷阱：用箭头函数定义方法
 
-**注意：**您可能想使用箭头函数来声明对象的方法.足够公平：与函数表达式相比，它们的声明非常短：（param）=> {...}而不是函数（param）{..}。
+**注意：** 您可能想使用箭头函数来声明对象的方法。足够公平：与函数表达式相比，它们的声明非常短：（param）=> {...}而不是函数（param）{..}。
 
 本示例使用箭头函数定义类Period上的方法format()：[Try in JS Bin](http://jsbin.com/?js,console)
 
@@ -728,7 +727,7 @@ var walkPeriod = new Period(2, 30);
 walkPeriod.format(); // => 'undefined hours and undefined minutes'
 ```
 由于format是一个箭头函数，并且在全局上下文（最上面的范围）中定义，所以它将this作为window对象。
-即使format作为对象walkPeriod.format()的方法执行，window仍保留为调用的上下文。发生这种情况是因为箭头函数的静态上下文在不同的调用类型中不会改变。
+即使format作为对象walkPeriod.format()的方法执行，window仍保留为调用的上下文。发生这种情况是因为**箭头函数的静态上下文在不同的调用类型中不会改变**。
 this 是 window，因此this.hours 和 this.minutes 是undefined。该方法返回字符串：'undefined hours and undefined minutes'，这不是预期的结果。
 
 函数表达式解决了这个问题，因为常规函数会根据调用改变其上下文：[Try in JS Bin](http://jsbin.com/?js,console)
